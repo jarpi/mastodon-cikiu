@@ -1,0 +1,23 @@
+version: '2'
+services:
+
+  db:
+    environment:
+      - POSTGRES_USER=postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    image: postgres:alpine
+### Uncomment to enable DB persistance
+    volumes:
+      - ./config/db:/docker-entrypoint-initdb.d
+
+  redis:
+    ports:
+      - "6379:6379"
+    restart: always
+    image: redis:alpine
+### Uncomment to enable REDIS persistance
+#    volumes:
+#      - ./redis:/data
+

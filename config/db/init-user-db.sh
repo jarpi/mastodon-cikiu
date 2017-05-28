@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" <<-EOSQL
+	CREATE ROLE mastodon WITH SUPERUSER CREATEDB INHERIT LOGIN;
+EOSQL
