@@ -35,6 +35,14 @@ class Api::V1::NotificationsController < ApiController
     render_empty
   end
 
+  def create
+    Notification.create!(account: current_account,
+                             from_account_id: Account.find(1),
+                             activity_type: "Mention")
+
+    render_empty
+  end
+
   private
 
   def exclude_types

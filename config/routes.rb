@@ -153,10 +153,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :notifications, only: [:index, :show] do
+      resources :notifications, only: [:index, :show, :create] do
         collection do
           post :clear
           post :dismiss
+          post :clear
         end
       end
 
