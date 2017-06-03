@@ -15,6 +15,7 @@ import { openModal } from '../../actions/modal';
 
 const messages = defineMessages({
   title: { id: 'column.notifications', defaultMessage: 'Notifications' },
+  customTitle: { id: 'column.CustomNotifications', defaultMessage: 'Custom Notifications' },
   clearMessage: { id: 'notifications.clear_confirmation', defaultMessage: 'Are you sure you want to permanently clear all your notifications?' },
   clearConfirm: { id: 'notifications.clear', defaultMessage: 'Clear notifications' }
 });
@@ -114,7 +115,7 @@ class Notifications extends React.PureComponent {
     }
 
     return (
-      <Column icon='bell' active={isUnread} heading={intl.formatMessage(messages.title)}>
+      <Column icon='bell' active={isUnread} heading={intl.formatMessage(messages.customTitle)}>
         <ColumnSettingsContainer />
         <ClearColumnButton onClick={this.handleClear} />
         <ScrollContainer scrollKey='notifications' shouldUpdateScroll={shouldUpdateScroll}>

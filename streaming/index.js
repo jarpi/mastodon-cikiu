@@ -35,8 +35,13 @@ if (cluster.isMaster) {
 
   const pgConfigs = {
     development: {
+      user:     process.env.DB_USER || 'mastodon',
+      password: process.env.DB_PASS || '',
+      database: process.env.DB_NAME || 'mastodon_development',
+      host:     process.env.DB_HOST || 'localhost',
+      port:     process.env.DB_PORT || 5432,
       database: 'mastodon_development',
-      host:     '/var/run/postgresql',
+      host:     '127.0.0.1',
       max:      10
     },
 

@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 20170425202925) do
     t.datetime "updated_at", null: false
     t.index ["account_id", "status_id"], name: "index_mentions_on_account_id_and_status_id", unique: true, using: :btree
     t.index ["status_id"], name: "index_mentions_on_status_id", using: :btree
+    t.index ["status_id"], name: "mentions_status_id_index", using: :btree
   end
 
   create_table "mutes", force: :cascade do |t|
