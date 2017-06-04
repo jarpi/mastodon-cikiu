@@ -24,7 +24,7 @@
 				}
 			],
 			"request": {
-				"url": "{{preprodUrl}}/api/v1/apps",
+				"url": "{{baseUrl}}/api/v1/apps",
 				"method": "POST",
 				"header": [
 					{
@@ -44,20 +44,17 @@
 						{
 							"key": "client_name",
 							"value": "Test app",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						},
 						{
 							"key": "redirect_uris",
 							"value": "urn:ietf:wg:oauth:2.0:oob",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						},
 						{
 							"key": "scopes",
 							"value": "read write follow",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						}
 					]
 				},
@@ -81,7 +78,7 @@
 				}
 			],
 			"request": {
-				"url": "{{preprodUrl}}/oauth/token",
+				"url": "{{baseUrl}}/oauth/token",
 				"method": "POST",
 				"header": [
 					{
@@ -101,32 +98,27 @@
 						{
 							"key": "client_id",
 							"value": "{{clientId}}",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						},
 						{
 							"key": "client_secret",
 							"value": "{{clientSecret}}",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						},
 						{
 							"key": "grant_type",
 							"value": "password",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						},
 						{
 							"key": "username",
 							"value": "{{userEmail}}",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						},
 						{
 							"key": "password",
 							"value": "{{userPassword}}",
-							"type": "text",
-							"enabled": true
+							"type": "text"
 						}
 					]
 				},
@@ -137,7 +129,7 @@
 		{
 			"name": "Get account",
 			"request": {
-				"url": "{{preprodUrl}}/api/v1/accounts/1",
+				"url": "{{baseUrl}}/api/v1/accounts/1",
 				"method": "GET",
 				"header": [
 					{
@@ -148,6 +140,33 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Create notification",
+			"request": {
+				"url": "{{baseUrl}}/api/v1/notifications",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
 						"description": ""
 					},
 					{
