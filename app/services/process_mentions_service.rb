@@ -28,6 +28,7 @@ class ProcessMentionsService < BaseService
     end
 
     status.mentions.includes(:account).each do |mention|
+      puts mention.inspect
       mentioned_account = mention.account
 
       if mentioned_account.local?
