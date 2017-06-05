@@ -119,6 +119,12 @@
 							"key": "password",
 							"value": "{{userPassword}}",
 							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "read write follow",
+							"description": "",
+							"type": "text"
 						}
 					]
 				},
@@ -129,7 +135,7 @@
 		{
 			"name": "Get account",
 			"request": {
-				"url": "{{baseUrl}}/api/v1/accounts/1",
+				"url": "{{baseUrl}}/api/v1/accounts/2",
 				"method": "GET",
 				"header": [
 					{
