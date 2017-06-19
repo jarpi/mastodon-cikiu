@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170425202925) do
+ActiveRecord::Schema.define(version: 20170619221523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username",                default: "",    null: false
@@ -48,6 +49,9 @@ ActiveRecord::Schema.define(version: 20170425202925) do
     t.integer  "followers_count",         default: 0,     null: false
     t.integer  "following_count",         default: 0,     null: false
     t.datetime "last_webfingered_at"
+    t.point    "lat"
+    t.point    "lng"
+    t.point    "geolocation"
     t.index "(((setweight(to_tsvector('simple'::regconfig, (display_name)::text), 'A'::\"char\") || setweight(to_tsvector('simple'::regconfig, (username)::text), 'B'::\"char\")) || setweight(to_tsvector('simple'::regconfig, (COALESCE(domain, ''::character varying))::text), 'C'::\"char\")))", name: "search_index", using: :gin
     t.index "lower((username)::text), lower((domain)::text)", name: "index_accounts_on_username_and_domain_lower", using: :btree
     t.index ["url"], name: "index_accounts_on_url", using: :btree
@@ -236,6 +240,13 @@ ActiveRecord::Schema.define(version: 20170425202925) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true, using: :btree
+  end
+
+  create_table "spatial_ref_sys", primary_key: "srid", id: :integer, force: :cascade do |t|
+    t.string  "auth_name", limit: 256
+    t.integer "auth_srid"
+    t.string  "srtext",    limit: 2048
+    t.string  "proj4text", limit: 2048
   end
 
   create_table "statuses", id: :bigserial, force: :cascade do |t|
