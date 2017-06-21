@@ -144,6 +144,6 @@ class Api::V1::AccountsController < ApiController
   end
 
   def account_params
-    params.permit(:display_name, :note, :avatar, :header, geolocation:[])
+    params.permit(:display_name, :note, :avatar, :header, :availability, geolocation:[])
   end
 end

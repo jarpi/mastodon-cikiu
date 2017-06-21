@@ -34,29 +34,13 @@
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"value": "application/json",
 						"description": ""
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "client_name",
-							"value": "Test app",
-							"type": "text"
-						},
-						{
-							"key": "redirect_uris",
-							"value": "urn:ietf:wg:oauth:2.0:oob",
-							"type": "text"
-						},
-						{
-							"key": "scopes",
-							"value": "read write follow",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": "{\n\t\"client_name\":\"Test app\",\n\t\"redirect_uris\":\"urn:ietf:wg:oauth:2.0:oob\",\n\t\"scopes\":\"read write follow\"\n}"
 				},
 				"description": ""
 			},
@@ -88,45 +72,13 @@
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"value": "application/json",
 						"description": ""
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "client_id",
-							"value": "{{clientId}}",
-							"type": "text"
-						},
-						{
-							"key": "client_secret",
-							"value": "{{clientSecret}}",
-							"type": "text"
-						},
-						{
-							"key": "grant_type",
-							"value": "password",
-							"type": "text"
-						},
-						{
-							"key": "username",
-							"value": "{{userEmail}}",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "{{userPassword}}",
-							"type": "text"
-						},
-						{
-							"key": "scope",
-							"value": "read write follow",
-							"description": "",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": "{\n\t\"client_id\": \"{{clientId}}\",\n\t\"client_secret\": \"{{clientSecret}}\",\n\t\"grant_type\": \"password\",\n\t\"username\": \"{{userEmail}}\",\n\t\"password\": \"{{userPassword}}\",\n\t\"scope\": \"read write follow\"\n}"
 				},
 				"description": ""
 			},
@@ -135,7 +87,7 @@
 		{
 			"name": "Get account",
 			"request": {
-				"url": "{{baseUrl}}/api/v1/accounts/2",
+				"url": "{{baseUrl}}/api/v1/accounts/1",
 				"method": "GET",
 				"header": [
 					{
@@ -172,7 +124,7 @@
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"value": "application/json",
 						"description": ""
 					},
 					{
@@ -199,7 +151,7 @@
 					},
 					{
 						"key": "Content-Type",
-						"value": "application/x-www-form-urlencoded",
+						"value": "application/json",
 						"description": ""
 					},
 					{
@@ -209,15 +161,38 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "status",
-							"value": "test status 3 #alert:123.123",
-							"description": "",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": "{\n\t\"status\": \"test status 3 #alert last version deployed\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update account",
+			"request": {
+				"url": "{{baseUrl}}/api/v1/accounts/update_credentials",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"display_name\": \"jarpi\",\n\t\"note\": \"test note 1\",\n\t\"geolocation\": [\n        43.5785522,\n        7.1251279\n    ],\n    \"availability\": \"available\"\n}"
 				},
 				"description": ""
 			},
