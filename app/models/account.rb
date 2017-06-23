@@ -8,6 +8,8 @@ class Account < ApplicationRecord
 
   attribute :geolocation, :legacy_point
 
+  attr_accessor :distanceinkm
+
   # Local users
   has_one :user, inverse_of: :account
   validates :username, presence: true, format: { with: /\A[a-z0-9_]+\z/i }, uniqueness: { scope: :domain, case_sensitive: false }, length: { maximum: 30 }, if: 'local?'
@@ -307,6 +309,18 @@ class Account < ApplicationRecord
       SQL
 
       Account.find_by_sql([sql, account.id, account.id, limit])
+    end
+
+    def near_accounts_of( account )
+      sql = <<-SQL.squish
+      SELECT *, acc.username, acc.geolocation, ST_Distance((SELECT ST_MakePoint(p[0],p[1], 4326)::geography as geom
+        FROM ( SELECT accounts.geolocation, accounts.username, accounts.geolocation
+          FROM accounts
+          WHERE accounts.id = acc.id) AS t(p)), ST_MakePoint(?, 4326)::geography)/1000 AS distanceInKm
+        FROM accounts acc
+        ORDER BY distanceInKm ASC
+      SQL
+      Account.find_by_sql([sql, account.geolocation])
     end
 
     def following_map(target_account_ids, account_id)

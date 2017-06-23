@@ -166,6 +166,7 @@ Rails.application.routes.draw do
           get :relationships
           get :verify_credentials
           patch :update_credentials
+          get :near_accounts
           get :search
         end
 

@@ -5,7 +5,7 @@ class Api::V1::AccountsController < ApiController
   before_action -> { doorkeeper_authorize! :follow }, only: [:follow, :unfollow, :block, :unblock, :mute, :unmute]
   before_action -> { doorkeeper_authorize! :write }, only: [:update_credentials]
   before_action :require_user!, except: [:show, :following, :followers, :statuses]
-  before_action :set_account, except: [:verify_credentials, :update_credentials, :suggestions, :search]
+  before_action :set_account, except: [:verify_credentials, :update_credentials, :near_accounts, :suggestions, :search]
 
   respond_to :json
 
@@ -20,6 +20,15 @@ class Api::V1::AccountsController < ApiController
     current_account.update!(account_params)
     @account = current_account
     render :show
+  end
+
+  def near_accounts
+    @usersNearBy  = Account.near_accounts_of(current_account)
+    @usersNearBy.each do |acc|
+      field_values = acc.attributes
+      acc.distanceinkm = field_values['distanceinkm']
+    end
+    render :accounts
   end
 
   def following
