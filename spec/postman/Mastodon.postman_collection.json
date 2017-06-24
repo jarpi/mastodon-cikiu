@@ -197,6 +197,36 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Get users near by",
+			"request": {
+				"url": "{{baseUrl}}/api/v1/accounts/near_accounts",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{accessToken}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"display_name\": \"jarpi\",\n\t\"note\": \"test note 1\",\n\t\"geolocation\": [\n        43.5785522,\n        7.1251279\n    ],\n    \"availability\": \"available\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
