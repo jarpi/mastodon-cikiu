@@ -6,7 +6,6 @@ class ProcessHashtagsService < BaseService
     puts "isAlert #{isAlert}"
     if isAlert != nil
       puts "IS ALERT!"
-      username = "admin1"
       sql = <<-SQL.squish
         SELECT id, username FROM Accounts
         WHERE Accounts.id <> ?
@@ -19,6 +18,7 @@ class ProcessHashtagsService < BaseService
           mentioned_account = mention.account
           if mentioned_account.local?
             NotifyService.new.call(mentioned_account, mention)
+            NotifyService.new.send_push_notification_to_apps
           else
             NotificationWorker.perform_async(stream_entry_to_xml(status.stream_entry), status.account_id, mentioned_account.id)
           end

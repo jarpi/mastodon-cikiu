@@ -14,6 +14,29 @@ class NotifyService < BaseService
     return
   end
 
+  def send_push_notification_to_apps
+    require 'net/https'
+    require 'json'
+    require "uri"
+    uri = URI.parse("https://api.ionic.io/push/notifications")
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+    @body = {
+    "profile" => "dev",
+    "notification" => {
+      "title" => "Cikiu alert system",
+      "message" => "Someone sent an alert"
+      },
+      "send_to_all" =>  true
+    }.to_json
+
+    request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmYyNzIxMi03NzIzLTRjZmYtODhlYS04MTI5NjRiNDRmODcifQ.CrN8g6Uemcqgz_2OC5JObWpUVY2e2nDcSutG0c7ykx0'})
+    response = http.request(request)
+    puts "Response #{response.code} #{response.message}: #{response.body}"
+  end
+
   private
 
   def blocked_mention?
@@ -60,4 +83,5 @@ class NotifyService < BaseService
   def email_enabled?
     @recipient.user.settings.notification_emails[@notification.type]
   end
+
 end
