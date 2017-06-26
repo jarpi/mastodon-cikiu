@@ -18,10 +18,10 @@ class ProcessHashtagsService < BaseService
           mentioned_account = mention.account
           if mentioned_account.local?
             NotifyService.new.call(mentioned_account, mention)
-            NotifyService.new.send_push_notification_to_apps
           else
             NotificationWorker.perform_async(stream_entry_to_xml(status.stream_entry), status.account_id, mentioned_account.id)
           end
+          NotifyService.new.send_push_notification_to_apps
         end
       end
     end
