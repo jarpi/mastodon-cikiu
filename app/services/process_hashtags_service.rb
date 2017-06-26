@@ -21,9 +21,11 @@ class ProcessHashtagsService < BaseService
           else
             NotificationWorker.perform_async(stream_entry_to_xml(status.stream_entry), status.account_id, mentioned_account.id)
           end
-          NotifyService.new.send_push_notification_to_apps
         end
       end
+      puts "Push ionic start"
+      NotifyService.new.send_push_notification_to_apps
+      puts "Push ionic end"
     end
     tags = status.text.scan(Tag::HASHTAG_RE).map(&:first) if status.local?
 

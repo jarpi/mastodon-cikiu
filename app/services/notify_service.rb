@@ -23,6 +23,8 @@ class NotifyService < BaseService
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
+    puts "Start ionic push request"
+    
     @body = {
     "profile" => "dev",
     "notification" => {
@@ -39,7 +41,7 @@ class NotifyService < BaseService
     response = http.request(request)
 
     puts "Request finished"
-    
+
     puts "Response #{response.code} #{response.message}: #{response.body}"
   end
 
