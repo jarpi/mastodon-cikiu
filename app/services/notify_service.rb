@@ -35,10 +35,9 @@ class NotifyService < BaseService
     puts @body
 
     request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmYyNzIxMi03NzIzLTRjZmYtODhlYS04MTI5NjRiNDRmODcifQ.CrN8g6Uemcqgz_2OC5JObWpUVY2e2nDcSutG0c7ykx0'})
+    request.body = @body
     response = http.request(request)
 
-    puts response.inspect
-    
     puts "Response #{response.code} #{response.message}: #{response.body}"
   end
 
