@@ -38,6 +38,8 @@ class NotifyService < BaseService
     request.body = @body
     response = http.request(request)
 
+    puts "Request finished"
+    
     puts "Response #{response.code} #{response.message}: #{response.body}"
   end
 

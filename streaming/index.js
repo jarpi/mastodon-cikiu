@@ -46,9 +46,10 @@ if (cluster.isMaster) {
     },
 
     production: {
-      user:     process.env.DB_USER || 'mastodon',
+      // I know... it has to be changed...
+      user:     process.env.DB_USER || 'postgres',
       password: process.env.DB_PASS || '',
-      database: process.env.DB_NAME || 'mastodon_production',
+      database: process.env.DB_NAME || 'poastgres',
       host:     process.env.DB_HOST || 'localhost',
       port:     process.env.DB_PORT || 5432,
       max:      10
