@@ -3,13 +3,12 @@
 class ProcessHashtagsService < BaseService
   def call(status, tags = [])
     isAlert = status.text =~ (Tag::ALERT_RE)
-    puts "isAlert #{isAlert}"
     if isAlert != nil
-      puts "IS ALERT!"
       sql = <<-SQL.squish
         SELECT id, username FROM Accounts
         WHERE Accounts.id <> ?
       SQL
+      
       mentioned_accounts = Account.find_by_sql([sql, status.account_id])
       mentioned_accounts.each do |account|
         mentioned_account = Account.find_remote(account.username, nil)
@@ -23,9 +22,7 @@ class ProcessHashtagsService < BaseService
           end
         end
       end
-      puts "Push ionic start"
-      NotifyService.new.send_push_notification_to_apps
-      puts "Push ionic end"
+      NotifyService.new.send_push_notification_to_apps(status.account.username)
     end
     tags = status.text.scan(Tag::HASHTAG_RE).map(&:first) if status.local?
 

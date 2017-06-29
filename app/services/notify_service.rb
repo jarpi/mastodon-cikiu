@@ -14,7 +14,7 @@ class NotifyService < BaseService
     return
   end
 
-  def send_push_notification_to_apps
+  def send_push_notification_to_apps(from_username)
     require 'net/https'
     require 'json'
     require "uri"
@@ -23,24 +23,18 @@ class NotifyService < BaseService
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-    puts "Start ionic push request"
-    
     @body = {
     "profile" => "dev",
     "notification" => {
-      "title" => "Cikiu alert system",
-      "message" => "Someone sent an alert"
+      "title" => "Cikiu Système d'alerte",
+      "message" => "Une alerte CIKIU a été envoyée par #{from_username}"
       },
       "send_to_all" =>  true
     }.to_json
 
-    puts @body
-
     request = Net::HTTP::Post.new(uri.request_uri, initheader = {'Content-Type' =>'application/json', 'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MmYyNzIxMi03NzIzLTRjZmYtODhlYS04MTI5NjRiNDRmODcifQ.CrN8g6Uemcqgz_2OC5JObWpUVY2e2nDcSutG0c7ykx0'})
     request.body = @body
     response = http.request(request)
-
-    puts "Request finished"
 
     puts "Response #{response.code} #{response.message}: #{response.body}"
   end
